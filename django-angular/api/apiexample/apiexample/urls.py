@@ -16,10 +16,34 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
-from django.http import HttpResponse
+from django.urls import path, include
+from .views import HealthCheckView, UserViewSet
+from rest_framework.routers import DefaultRouter
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Django API Example",
+        default_version="v1",
+        description="API Example for Django",
+    ),
+    public=True,
+    permission_classes=(permissions.AllowAny,),
+)
+
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r"users", UserViewSet)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("health-check/", lambda request: HttpResponse("OK"), name="health-check"),
+    path("health-check/", HealthCheckView.as_view()),
+    path("", include(router.urls)),
+    path(
+        "docs/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
 ]
