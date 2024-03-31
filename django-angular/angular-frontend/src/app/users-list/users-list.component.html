@@ -13,7 +13,9 @@
       <div class="container mx-auto">
         <ul class="list-disc">
           <li *ngFor="let user of users" class="p-2">
-            {{ user.name }} - {{ user.email }}
+            <a [routerLink]="['/', 'users-profile', user.id]">
+              {{ user.name + ' - ' + user.email }}
+            </a>
           </li>
         </ul>
       </div>

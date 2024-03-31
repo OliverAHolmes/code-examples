@@ -4,22 +4,25 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class UserService {
-  url = 'http://127.0.0.1:8000/users/?format=json';
+  url = 'http://127.0.0.1:8000/users/';
 
   async getUsers(): Promise<any[]> {
-    const data = await fetch(this.url);
-    console.log(data);
+    const data = await fetch(this.url, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
     return (await data.json()) ?? [];
   }
 
-  // async getHousingLocationById(
-  //   id: number
-  // ): Promise<HousingLocation | undefined> {
-  //   const data = await fetch(`${this.url}/${id}`);
-  //   return (await data.json()) ?? {};
-  // }
-
-  // submitApplication(firstName: string, lastName: string, email: string) {
-  //   console.log(firstName, lastName, email);
-  // }
+  async getUser(id: number): Promise<any> {
+    const data = await fetch(`${this.url}${id}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+      },
+    });
+    return await data.json();
+  }
 }
