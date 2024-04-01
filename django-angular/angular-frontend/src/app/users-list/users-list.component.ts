@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { UserService } from '../user.service';
 
 @Component({
@@ -13,7 +13,11 @@ import { UserService } from '../user.service';
 export class UsersListComponent implements OnInit {
   users: any[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor(private router: Router, private userService: UserService) {}
+
+  navigateHome() {
+    this.router.navigate(['/']);
+  }
 
   ngOnInit(): void {
     this.userService.getUsers().then((users) => {

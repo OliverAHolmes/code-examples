@@ -1,5 +1,102 @@
+<section class="container px-4 mx-auto">
+  <div class="sm:flex sm:items-center sm:justify-between">
+    <div class="flex items-center mt-4 gap-x-3">
+      <button
+        (click)="navigateHome()"
+        class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg sm:w-auto gap-x-2 hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600"
+      >
+        <span>Home</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="flex flex-col mt-6">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <div
+          class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg"
+        >
+          <table
+            class="min-w-full divide-y divide-gray-200 dark:divide-gray-700"
+          >
+            <thead class="bg-gray-50 dark:bg-gray-800">
+              <tr>
+                <th
+                  scope="col"
+                  class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                >
+                  Name
+                </th>
+
+                <th
+                  scope="col"
+                  class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                >
+                  Email
+                </th>
+
+                <th
+                  scope="col"
+                  class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                >
+                  Date created
+                </th>
+
+                <th
+                  scope="col"
+                  class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400"
+                >
+                  Last updated
+                </th>
+              </tr>
+            </thead>
+            <tbody
+              class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900"
+            >
+              <tr *ngFor="let user of users">
+                <td
+                  class="px-4 py-4 text-sm font-medium text-gray-700 whitespace-nowrap"
+                >
+                  <div class="inline-flex items-center gap-x-3">
+                    <div class="flex items-center gap-x-2">
+                      <div>
+                        <p
+                          class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                        >
+                          <a [routerLink]="['/', 'users-profile', user.id]">
+                            {{ user.name }}
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td
+                  class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                >
+                  {{ user.email }}
+                </td>
+                <td
+                  class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                >
+                  {{ user.created_at | date : "medium" : "Australia/Adelaide" }}
+                </td>
+                <td
+                  class="px-4 py-4 text-sm text-gray-500 dark:text-gray-300 whitespace-nowrap"
+                >
+                  {{ user.updated_at | date : "medium" : "Australia/Adelaide" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- src/app/home/home.component.html -->
-<div
+
+<!-- <div
   class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl"
 >
   <div class="md:flex">
@@ -27,4 +124,4 @@
       >
     </div>
   </div>
-</div>
+</div> -->
