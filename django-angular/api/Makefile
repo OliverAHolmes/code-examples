@@ -1,11 +1,11 @@
 run:
-	cd apiexample && ./manage.py runserver
+	./manage.py runserver
 
 make-migrations:
-	cd apiexample && ./manage.py makemigrations apiexample
+	./manage.py makemigrations api
 
 migrate:
-	cd apiexample && ./manage.py migrate
+	./manage.py makemigrations api
 
 format-and-lint:
 	ruff format . && ruff check .
