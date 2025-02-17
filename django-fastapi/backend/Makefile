@@ -4,7 +4,7 @@ setup:
 
 
 run:
-	cd app && python manage.py runserver       
+	cd app && python3 manage.py runserver       
 
 create_superuser:
 	cd app && python manage.py createsuperuser

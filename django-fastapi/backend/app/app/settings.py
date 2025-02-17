@@ -140,6 +140,7 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
-    'ALGORITHM': 'HS256',
-    'SIGNING_KEY': 'your-secret-key',  # Change this to a secure secret key
+    'ALGORITHM': 'RS256',
+    'SIGNING_KEY': (BASE_DIR / 'private_key.pem').read_text(),
+    'VERIFYING_KEY': (BASE_DIR / 'public_key.pem').read_text(),
 }

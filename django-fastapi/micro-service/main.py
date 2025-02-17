@@ -1,7 +1,10 @@
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, HTTPException, Depends
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from fastapi.middleware.cors import CORSMiddleware
 from typing import List
 import jwt
+from pathlib import Path
+
 
 app = FastAPI()
 
@@ -15,8 +18,9 @@ app.add_middleware(
 )
 
 # JWT settings (must match Django's settings)
-JWT_SECRET = "your-secret-key"  # Use the same secret key as in Django
-ALGORITHM = "HS256"
+public_key = (Path(__file__).parent / "../backend/app/public_key.pem").read_text()
+ALGORITHM = "RS256"
+http_bearer = HTTPBearer()
 
 class ConnectionManager:
     def __init__(self):
@@ -39,25 +43,17 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 async def verify_token(token: str):
+    print(token)
     try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=[ALGORITHM])
-        return payload
-    except jwt.ExpiredSignatureError:
-        raise HTTPException(status_code=401, detail="Token has expired")
-    except jwt.JWTError:
-        raise HTTPException(status_code=401, detail="Invalid token")
+        print(public_key)
+        payload = jwt.decode(token, public_key, algorithms=[ALGORITHM])
+        print('my test')
 
-# @app.websocket("/ws-echo")
-# async def echo_endpoint(websocket: WebSocket):
-#     await websocket.accept()
-#     print("connection open")
-#     try:
-#         while True:
-#             data = await websocket.receive_text()
-#             print("received:", data)
-#             await websocket.send_text(f"Echo: {data}")
-#     except WebSocketDisconnect:
-#         print("connection closed")
+        print(payload)
+        return payload
+    except Exception as e:
+        print(e)
+        raise HTTPException(status_code=401, detail="Invalid token")
 
 @app.websocket("/ws/{token}")
 async def websocket_endpoint(websocket: WebSocket, token: str):
