@@ -1,0 +1,29 @@
+version: '3.7'
+services:
+  drf:
+    build: ./django-rest/drf_project
+    ports:
+      - "8001:8000"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '512M'
+  fastapi:
+    build: ./fastapi-rest
+    ports:
+      - "8002:8000"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '512M'
+  robyn:
+    build: ./robyn-rest
+    ports:
+      - "8003:8000"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '512M'

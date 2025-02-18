@@ -15,3 +15,4 @@ urlpatterns = [
     path('.well-known/jwks.json', jwks_view, name='jwks_view'),
     
 ]
+
