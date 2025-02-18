@@ -1,5 +1,6 @@
 FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim
 
+# Install dependencies
 WORKDIR /app
 
 # Enable bytecode compilation
@@ -26,7 +27,11 @@ ENV PATH="/app/.venv/bin:$PATH"
 # Reset the entrypoint, don't invoke `uv`
 ENTRYPOINT []
 
-COPY main.py /app/
+# Copy project
+COPY drf_project/drf_project /app/drf_project
 
+# Expose the port
 EXPOSE 8000
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
+
+# Use gunicorn for production-like environment
+CMD ["gunicorn", "drf_project.wsgi:application", "--bind", "0.0.0.0:8000", "--workers", "4"]

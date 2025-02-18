@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   drf:
-    build: ./django-rest/drf_project
+    build: ./django-rest
     ports:
       - "8001:8000"
     deploy:
@@ -22,6 +22,15 @@ services:
     build: ./robyn-rest
     ports:
       - "8003:8000"
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: '512M'
+  actix-web:
+    build: ./actix-web-rest
+    ports:
+      - "8004:8000"
     deploy:
       resources:
         limits:
